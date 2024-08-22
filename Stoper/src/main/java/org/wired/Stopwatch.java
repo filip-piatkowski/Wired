@@ -3,7 +3,7 @@ package org.wired;
 public class Stopwatch {
     private long startTime;
     private long endTime;
-    private boolean running;
+    public boolean running;
 
     public void start() {
         this.startTime = System.currentTimeMillis();
