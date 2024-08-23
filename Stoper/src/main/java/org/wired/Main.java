@@ -13,5 +13,3 @@ public class Main {
         });
     }
 }
-//TODO
-// 1. Dodać możliwość kontynuowania pomiaru i zapisania miedzyczasów.

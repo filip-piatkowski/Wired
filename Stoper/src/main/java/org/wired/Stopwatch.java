@@ -28,4 +28,8 @@ public class Stopwatch {
         this.endTime = 0;
         this.running = false;
     }
+
+    public boolean isRunning() {
+        return false;
+    }
 }
