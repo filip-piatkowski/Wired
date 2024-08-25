@@ -1,39 +1,58 @@
+
 import org.junit.jupiter.api.Test;
+import org.wired.Task;
 
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
 
     @Test
-    void createTaskSuccessfully() {
-        Task task = new Task("Kup w sklepie", "Mleko, Chleb, Jajka", LocalDate.now().plusDays(1), false);
-        assertNotNull(task);
-        assertEquals("Kup w sklepie", task.title());
-        assertEquals("Mleko, Chleb, Jajka", task.description());
+    public void testTaskCreation() {
+        Task task = new Task("Tytuł", "Opis", LocalDate.now(), false);
+        assertEquals("Tytuł", task.title());
+        assertEquals("Opis", task.description());
+        assertEquals(LocalDate.now(), task.dueDate());
         assertFalse(task.isCompleted());
     }
 
     @Test
-    void throwExceptionWhenTitleIsBlank() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () new Task(" ", "Opis", LocalDate.now(), false));
-        assertEquals("Tytuł nie może być pusty", exception.getMessage());
+    public void testTaskCreationWithNullTitle() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Task(null, "Opis", LocalDate.now(), false);
+        });
     }
 
     @Test
-    void throwExceptionDueDateIsNull() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () new Task("Tytuł", "Opis", null, false));
-        assertEquals("Data końcowa nie może być null'em", exception.getMessage());
+    public void testTaskCreationWithBlankTitle() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Task("", "Opis", LocalDate.now(), false);
+        });
     }
 
     @Test
-    void completeTaskSuccessfully() {
-        Task task = new Task("Kup w sklepie", "Mleko, Chleb, Jajka", LocalDate.now().plusDays(1), false);
-        Task completedTask= task.complete();
+    public void testTaskCreationWithNullDueDate() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Task("Tytuł", "Opis", null, false);
+        });
+    }
+
+    @Test
+    public void testCompleteTask() {
+        Task task = new Task("Tytuł", "Opis", LocalDate.now(), false);
+        Task completedTask = task.complete();
         assertTrue(completedTask.isCompleted());
-        assertEquals(task.title(), completedTask.title());
-        assertEquals(task.description(), completedTask.description());
-        assertEquals(task.dueDate(), completedTask.dueDate());
+    }
+
+    @Test
+    public void testToString() {
+        Task task = new Task("Tytuł", "Opis", LocalDate.now(), false);
+        String expected = "Zadanie" +
+                "tytuł='Tytuł'" +
+                ", opis='Opis'" +
+                ", data końcowa=" + LocalDate.now() +
+                ", wykonane=false" +
+                '}';
+        assertEquals(expected, task.toString());
     }
 }

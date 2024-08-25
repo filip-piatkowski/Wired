@@ -1,17 +1,33 @@
 package org.wired;
 
+import java.time.LocalDate;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        ToDoList toDoList = new ToDoList();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Task task1 = new Task("Zrobić zakupy", "Mleko, chleb, jaja", LocalDate.now().plusDays(1), false);
+        Task task2 = new Task("Zakończ projekt", "Dokończ ostatni raport", LocalDate.now().plusDays(3), false);
+        Task task3 = new Task("Siłka", "Idź pobiegać", LocalDate.now(), false);
+
+        toDoList.addTask(task1);
+        toDoList.addTask(task2);
+        toDoList.addTask(task3);
+
+        System.out.println("Wszystkie zadania:");
+        toDoList.getTasks().forEach(System.out::println);
+
+        System.out.println("\nOczekujące zadania:");
+        toDoList.getPendingTasks().forEach(System.out::println);
+
+        Task completedTask = task1.complete();
+        toDoList.removeTask(task1);
+        toDoList.addTask(completedTask);
+
+        System.out.println("\nWykonane zadania:");
+        toDoList.getCompletedTasks().forEach(System.out::println);
     }
 }
+//TODO Ztobić prawilną aplikacje z interfejsem.
